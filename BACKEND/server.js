@@ -76,7 +76,7 @@ if (process.env.NODE_ENV === 'production') {
   const distPath = path.join(__dirname, '../FRONTEND/dist');
   app.use(express.static(distPath));
 
-  // Catch-all handler for SPA
+  // Catch-all handler for SPA (must be last)
   app.get('*', (req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
   });
@@ -86,11 +86,6 @@ if (process.env.NODE_ENV === 'production') {
 app.use((err, req, res, next) => {
   console.error("Global Error Handler:", err.stack || err.message);
   res.status(500).json({ success: false, message: err.message || 'Server Error' });
-});
-
-// 404 handler
-app.use('*', (req, res) => {
-  res.status(404).json({ success: false, message: 'Route not found' });
 });
 
 app.listen(PORT, async () => {
