@@ -22,7 +22,8 @@ app.use(cookieParser())
 const allowedOrigins = [
   'http://localhost:5173',
   'https://fullstack-todoapp-gyay.onrender.com', // Backend URL
-  'https://fullstack-todo-frontend.onrender.com', // Frontend URL (will be updated)
+  'https://fullstack-todo-frontend-hwje.onrender.com', // Frontend URL
+  'https://fullstack-todo-frontend.onrender.com', // Alternative frontend URL
   'https://fullstack-todoapp-frontend.onrender.com' // Alternative frontend URL
 ];
 
