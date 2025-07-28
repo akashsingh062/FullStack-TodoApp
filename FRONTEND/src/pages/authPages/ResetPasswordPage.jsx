@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router';
 import { Mail, Lock, ArrowRight, KeyRound } from 'lucide-react';
 import { useUserContext } from '../../context/UserContext';
 import { toast } from 'react-toastify';
-import { set } from 'mongoose';
 
 const ResetPasswordPage = () => {
     const navigate = useNavigate();
