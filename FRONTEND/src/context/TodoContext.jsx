@@ -1,12 +1,14 @@
 import { createContext, useContext, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 const TodoContext = createContext();
 
 
 export const TodoProvider = ({ children }) => {
     const backendUrl = import.meta.env.VITE_API_URL;
+    const navigate = useNavigate();
     const [todos, setTodos] = useState([]);
     const [currentTodo, setCurrentTodo] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
