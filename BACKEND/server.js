@@ -54,7 +54,14 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
 }));
 
-// Serve frontend in production
+// Routes
+app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/", todoRoute);
+
+app.get("/", (req, res) => {
+  res.send(homeContent);
+});
+
 import path from 'path';
 const __dirname = path.resolve();
 
@@ -65,15 +72,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, '../FRONTEND/dist/index.html'))
   );
 }
-
-// Routes
-app.use("/api/v1/auth", authRoute);
-app.use("/api/v1/", todoRoute);
-
-app.get("/", (req, res) => {
-  res.send(homeContent);
-});
-
 
 // Global error handler
 app.use((err, req, res, next) => {
