@@ -102,6 +102,7 @@ export const UserProvider = ({ children }) => {
                 navigate("/dashboard");
             }
         } catch (error) {
+            console.log(error);
             toast.error("Something went wrong.");
         } finally {
             setIsLoading(false);
