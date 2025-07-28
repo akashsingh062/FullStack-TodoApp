@@ -15,8 +15,8 @@ router.get('/todos', getAllTodos);
 router.get('/todos/recent', getRecentTodos);
 router.get('/todos/stats', getTodoStats);
 router.post('/todo', createNewTodo);
+router.get('/todos/:id', getTodo);
 router.patch('/todos/:id', editTodo);
 router.delete('/todos/:id', deleteTodo);
-router.get('/todos/:id', getTodo);
 
 export default router

@@ -7,15 +7,16 @@ import authRoute from "./routes/authRoute.js";
 import todoRoute from "./routes/todoRoute.js";
 import cors from "cors";
 import { homeContent } from "./utils/homeContent.js";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+import path from 'path';
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
-
 const app = express();
 
-import helmet from "helmet";
-import rateLimit from "express-rate-limit";
+// Security middleware
 app.use(helmet());
 
 const limiter = rateLimit({
@@ -24,22 +25,22 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-app.use(express.json())
-app.use(urlencoded({ extended: true }))
-app.use(cookieParser())
+// Body parsing middleware
+app.use(express.json());
+app.use(urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // CORS configuration for production
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://fullstack-todoapp-gyay.onrender.com', // Backend URL
-  'https://fullstack-todo-frontend-hwje.onrender.com', // Frontend URL
-  'https://fullstack-todo-frontend.onrender.com', // Alternative frontend URL
-  'https://fullstack-todoapp-frontend.onrender.com' // Alternative frontend URL
+  'https://fullstack-todoapp-gyay.onrender.com',
+  'https://fullstack-todo-frontend-hwje.onrender.com',
+  'https://fullstack-todo-frontend.onrender.com',
+  'https://fullstack-todoapp-frontend.onrender.com'
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     
     if (allowedOrigins.indexOf(origin) !== -1) {
@@ -54,23 +55,31 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
 }));
 
-// Routes
+// API Routes
 app.use("/api/v1/auth", authRoute);
-app.use("/api/v1/", todoRoute);
+app.use("/api/v1", todoRoute);
 
+// Home route
 app.get("/", (req, res) => {
   res.send(homeContent);
 });
 
-import path from 'path';
+// Test route
+app.get("/test", (req, res) => {
+  res.json({ message: "Server is working" });
+});
+
 const __dirname = path.resolve();
 
+// Serve static files in production
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../FRONTEND/dist')));
+  const distPath = path.join(__dirname, '../FRONTEND/dist');
+  app.use(express.static(distPath));
 
-  app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, '../FRONTEND/dist/index.html'))
-  );
+  // Catch-all handler for SPA
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
 }
 
 // Global error handler
@@ -79,7 +88,17 @@ app.use((err, req, res, next) => {
   res.status(500).json({ success: false, message: err.message || 'Server Error' });
 });
 
+// 404 handler
+app.use('*', (req, res) => {
+  res.status(404).json({ success: false, message: 'Route not found' });
+});
+
 app.listen(PORT, async () => {
-    await connect()
-  console.log(`Server started on port ${PORT}`);
+  try {
+    await connect();
+    console.log(`Server started on port ${PORT}`);
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
 });
