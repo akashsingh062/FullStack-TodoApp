@@ -14,6 +14,16 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+app.use(helmet());
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+});
+app.use(limiter);
+
 app.use(express.json())
 app.use(urlencoded({ extended: true }))
 app.use(cookieParser())
@@ -35,7 +45,8 @@ app.use(cors({
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      console.warn(`CORS Rejected Origin: ${origin}`);
+      callback(new Error("Not allowed by CORS"));
     }
   },
   credentials: true,
@@ -43,12 +54,31 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
 }));
 
+// Serve frontend in production
+import path from 'path';
+const __dirname = path.resolve();
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../FRONTEND/dist')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, '../FRONTEND/dist/index.html'))
+  );
+}
+
 // Routes
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/", todoRoute);
 
 app.get("/", (req, res) => {
   res.send(homeContent);
+});
+
+
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error("Global Error Handler:", err.stack || err.message);
+  res.status(500).json({ success: false, message: err.message || 'Server Error' });
 });
 
 app.listen(PORT, async () => {
