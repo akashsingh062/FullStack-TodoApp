@@ -31,4 +31,4 @@ services:
     staticPublishPath: ./FRONTEND/dist
     envVars:
       - key: VITE_API_URL
-        value: https://fullstack-todo-backend.onrender.com 
+        value: https://fullstack-todoapp-gyay.onrender.com 

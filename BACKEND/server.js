@@ -21,8 +21,9 @@ app.use(cookieParser())
 // CORS configuration for production
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://your-frontend-app-name.onrender.com', // Replace with your actual frontend URL
-  'https://fullstack-todo-app-frontend.onrender.com' // Example frontend URL
+  'https://fullstack-todoapp-gyay.onrender.com', // Backend URL
+  'https://fullstack-todo-frontend.onrender.com', // Frontend URL (will be updated)
+  'https://fullstack-todoapp-frontend.onrender.com' // Alternative frontend URL
 ];
 
 app.use(cors({
