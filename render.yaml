@@ -21,14 +21,3 @@ services:
         sync: false
       - key: SENDER_EMAIL
         sync: false
-
-  # Frontend Service
-  - type: web
-    name: fullstack-todo-frontend
-    env: static
-    plan: free
-    buildCommand: cd FRONTEND && npm install && npm run build
-    staticPublishPath: ./FRONTEND/dist
-    envVars:
-      - key: VITE_API_URL
-        value: https://fullstack-todoapp-gyay.onrender.com 
