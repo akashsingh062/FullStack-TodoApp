@@ -1,0 +1,34 @@
+services:
+  # Backend API Service
+  - type: web
+    name: fullstack-todo-backend
+    env: node
+    plan: free
+    buildCommand: cd BACKEND && npm install
+    startCommand: cd BACKEND && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: SENDER_EMAIL
+        sync: false
+
+  # Frontend Service
+  - type: web
+    name: fullstack-todo-frontend
+    env: static
+    plan: free
+    buildCommand: cd FRONTEND && npm install && npm run build
+    staticPublishPath: ./FRONTEND/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://fullstack-todo-backend.onrender.com 
