@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const backendUrl = import.meta.env.VITE_API_URL;
     axios.defaults.withCredentials = true;
     const [user, setUser] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);

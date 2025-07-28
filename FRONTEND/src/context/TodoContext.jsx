@@ -6,7 +6,7 @@ const TodoContext = createContext();
 
 
 export const TodoProvider = ({ children }) => {
-    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const backendUrl = import.meta.env.VITE_API_URL;
     const [todos, setTodos] = useState([]);
     const [currentTodo, setCurrentTodo] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
