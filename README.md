@@ -272,22 +272,61 @@ The app uses Brevo (formerly Sendinblue) for email services. Configure your SMTP
 
 ## 🚀 Deployment
 
-### Backend Deployment
-1. Set up a MongoDB database (MongoDB Atlas recommended)
-2. Configure environment variables on your hosting platform
-3. Deploy to platforms like:
-   - Heroku
-   - Railway
-   - Render
-   - DigitalOcean App Platform
+### Deploy to Render (Recommended)
 
-### Frontend Deployment
-1. Build the production version: `npm run build`
-2. Deploy the `dist` folder to platforms like:
-   - Vercel
-   - Netlify
-   - GitHub Pages
-   - Firebase Hosting
+This project is configured for easy deployment on Render. Follow these steps:
+
+#### 1. Backend Deployment
+1. **Fork/Clone this repository** to your GitHub account
+2. **Sign up/Login** to [Render](https://render.com)
+3. **Create a new Web Service**
+4. **Connect your GitHub repository**
+5. **Configure the service:**
+   - **Name:** `fullstack-todo-backend`
+   - **Environment:** `Node`
+   - **Build Command:** `cd BACKEND && npm install`
+   - **Start Command:** `cd BACKEND && npm start`
+   - **Plan:** Free
+
+6. **Add Environment Variables:**
+   ```
+   NODE_ENV=production
+   PORT=3000
+   MONGO_URI=your_mongodb_atlas_connection_string
+   JWT_SECRET=your_secure_jwt_secret
+   SMTP_USER=your_email@example.com
+   SMTP_PASS=your_email_password
+   SENDER_EMAIL=your_email@example.com
+   ```
+
+#### 2. Frontend Deployment
+1. **Create a new Static Site** on Render
+2. **Connect the same GitHub repository**
+3. **Configure the service:**
+   - **Name:** `fullstack-todo-frontend`
+   - **Build Command:** `cd FRONTEND && npm install && npm run build`
+   - **Publish Directory:** `FRONTEND/dist`
+   - **Plan:** Free
+
+4. **Add Environment Variable:**
+   ```
+   VITE_API_URL=https://your-backend-service-name.onrender.com
+   ```
+
+#### 3. Update CORS Settings
+After deployment, update the backend CORS settings in `BACKEND/server.js` with your actual frontend URL.
+
+### Alternative Deployment Options
+
+#### Backend Deployment
+- **Railway:** Similar to Render, supports Node.js
+- **Heroku:** Classic choice, requires credit card for free tier
+- **DigitalOcean App Platform:** More control, paid service
+
+#### Frontend Deployment
+- **Vercel:** Excellent for React apps, automatic deployments
+- **Netlify:** Great static site hosting
+- **GitHub Pages:** Free, good for simple apps
 
 ## 🤝 Contributing
 
