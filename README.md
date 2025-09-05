@@ -1,7 +1,5 @@
 # 🚀 FullStack Todo App
 
-> 🧠 **UI Built with Augment AI** | 💻 Developed using Cursor IDE  
-
 A modern, full-stack todo application built with React, Node.js, and MongoDB. Features a beautiful UI with authentication, email verification, and comprehensive task management capabilities.
 
 ![Todo App](https://img.shields.io/badge/Status-Live-brightgreen)
