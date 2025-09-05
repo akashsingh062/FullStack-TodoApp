@@ -19,7 +19,9 @@ app.use(urlencoded({ extended: true }))
 app.use(cookieParser())
 
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: process.env.NODE_ENV === 'production' 
+    ? process.env.FRONTEND_URL
+    : "http://localhost:5173",
   credentials: true,
 }))
 

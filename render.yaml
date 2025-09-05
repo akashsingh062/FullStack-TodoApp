@@ -1,0 +1,42 @@
+services:
+  # Backend API Service
+  - type: web
+    name: fullstack-todo-backend
+    env: node
+    plan: free
+    buildCommand: cd BACKEND && npm install
+    startCommand: cd BACKEND && npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: MONGO_URI
+        sync: false  # Set manually in Render dashboard
+      - key: JWT_SECRET
+        sync: false  # Set manually in Render dashboard
+      - key: SMTP_USER
+        sync: false  # Set manually in Render dashboard
+      - key: SMTP_PASS
+        sync: false  # Set manually in Render dashboard
+      - key: SENDER_EMAIL
+        sync: false  # Set manually in Render dashboard
+      - key: FRONTEND_URL
+        sync: false  # Set manually to frontend URL after deployment
+
+  # Frontend Static Site
+  - type: web
+    name: fullstack-todo-frontend
+    env: static
+    plan: free
+    buildCommand: cd FRONTEND && npm install && npm run build
+    staticPublishPath: ./FRONTEND/dist
+    envVars:
+      - key: VITE_BACKEND_URL
+        sync: false  # Set manually to backend URL after deployment
+
+databases:
+  # Optional: Use Render Postgres instead of MongoDB Atlas
+  # - name: fullstack-todo-db
+  #   plan: free

@@ -272,49 +272,50 @@ The app uses Brevo (formerly Sendinblue) for email services. Configure your SMTP
 
 ## 🚀 Deployment
 
-### Deploy to Render (Recommended)
+### Quick Deploy to Render.com
 
-This project is configured for easy deployment on Render. Follow these steps:
+This project is configured for **one-click deployment** using Infrastructure as Code!
 
-#### 1. Backend Deployment
-1. **Fork/Clone this repository** to your GitHub account
-2. **Sign up/Login** to [Render](https://render.com)
-3. **Create a new Web Service**
-4. **Connect your GitHub repository**
-5. **Configure the service:**
-   - **Name:** `fullstack-todo-backend`
-   - **Environment:** `Node`
-   - **Build Command:** `cd BACKEND && npm install`
-   - **Start Command:** `cd BACKEND && npm start`
-   - **Plan:** Free
+#### Method 1: Quick Deploy (Recommended)
+```bash
+# Run the deployment helper script
+./deploy.sh
+```
 
-6. **Add Environment Variables:**
-   ```
-   NODE_ENV=production
-   PORT=3000
-   MONGO_URI=your_mongodb_atlas_connection_string
-   JWT_SECRET=your_secure_jwt_secret
-   SMTP_USER=your_email@example.com
-   SMTP_PASS=your_email_password
-   SENDER_EMAIL=your_email@example.com
-   ```
+Then:
+1. Go to [Render.com](https://render.com) and sign in
+2. Click "New" → "Blueprint" 
+3. Connect your GitHub repository
+4. Render automatically detects `render.yaml` and creates both services
+5. Configure environment variables (see `DEPLOYMENT.md`)
 
-#### 2. Frontend Deployment
-1. **Create a new Static Site** on Render
-2. **Connect the same GitHub repository**
-3. **Configure the service:**
-   - **Name:** `fullstack-todo-frontend`
-   - **Build Command:** `cd FRONTEND && npm install && npm run build`
-   - **Publish Directory:** `FRONTEND/dist`
-   - **Plan:** Free
+#### Method 2: Manual Setup
 
-4. **Add Environment Variable:**
-   ```
-   VITE_API_URL=https://your-backend-service-name.onrender.com
-   ```
+For detailed step-by-step instructions, see **[DEPLOYMENT.md](DEPLOYMENT.md)**
 
-#### 3. Update CORS Settings
-After deployment, update the backend CORS settings in `BACKEND/server.js` with your actual frontend URL.
+### Required Environment Variables
+
+**Backend:**
+```env
+NODE_ENV=production
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/todoapp
+JWT_SECRET=your_secure_jwt_secret_at_least_32_characters
+SMTP_USER=your_email@example.com
+SMTP_PASS=your_email_app_password
+SENDER_EMAIL=your_email@example.com
+FRONTEND_URL=https://your-frontend-name.onrender.com
+```
+
+**Frontend:**
+```env
+VITE_BACKEND_URL=https://your-backend-name.onrender.com
+```
+
+### Prerequisites
+- GitHub repository
+- MongoDB Atlas account (free tier available)
+- Render.com account (free tier available)
+- Email service (Gmail with app password works great)
 
 ### Alternative Deployment Options
 
