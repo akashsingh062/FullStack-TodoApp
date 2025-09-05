@@ -9,7 +9,7 @@ async function connect() {
             console.log("Mongo DB connected")
         }
     } catch (error) {
-        throw new Error("Failed to connect to MongoDB")
+        throw new Error("Failed to connect to MongoDB") 
     }
 }
 export default connect
