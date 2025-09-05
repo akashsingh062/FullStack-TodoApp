@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const backendUrl = import.meta.env.VITE_API_URL;
     axios.defaults.withCredentials = true;
     const [user, setUser] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,7 +17,7 @@ export const UserProvider = ({ children }) => {
     const requireAuth = async () => {
         try {
             const response = await axios.get(
-                `${backendUrl}/api/v1/auth/is-auth`,
+                `/api/v1/auth/is-auth`,
                 {
                     withCredentials: true,
                 }
@@ -48,7 +47,7 @@ export const UserProvider = ({ children }) => {
         try {
             setIsLoading(true);
             const response = await axios.post(
-                `${backendUrl}/api/v1/auth/send-verification-email-otp`,
+                `/api/v1/auth/send-verification-email-otp`,
                 {
                     withCredentials: true,
                 }
@@ -69,7 +68,7 @@ export const UserProvider = ({ children }) => {
             setIsLoading(true);
             setIsOtpSent(true);
             const response = await axios.post(
-                `${backendUrl}/api/v1/auth/send-verification-email-otp`,
+                `/api/v1/auth/send-verification-email-otp`,
                 {
                     withCredentials: true,
                 }
@@ -90,7 +89,7 @@ export const UserProvider = ({ children }) => {
         try {
             setIsLoading(true);
             const response = await axios.post(
-                `${backendUrl}/api/v1/auth/login`,
+                `/api/v1/auth/login`,
                 {
                     email,
                     password,
@@ -113,7 +112,7 @@ export const UserProvider = ({ children }) => {
         try {
             setIsLoading(true);
             const response = await axios.post(
-                `${backendUrl}/api/v1/auth/register`,
+                `/api/v1/auth/register`,
                 {
                     name,
                     email,
@@ -136,7 +135,7 @@ export const UserProvider = ({ children }) => {
         try {
             setIsLoading(true);
             const response = await axios.post(
-                `${backendUrl}/api/v1/auth/logout`,
+                `/api/v1/auth/logout`,
                 {
                     withCredentials: true,
                 }
@@ -166,7 +165,7 @@ export const UserProvider = ({ children }) => {
             setIsLoading(true);
             setIsOtpSent(false);
             const response = await axios.post(
-                `${backendUrl}/api/v1/auth/verify-email`,
+                `/api/v1/auth/verify-email`,
                 {
                     otp,
                 }
@@ -189,7 +188,7 @@ export const UserProvider = ({ children }) => {
         try {
             setIsLoading(true);
             const response = await axios.post(
-                `${backendUrl}/api/v1/auth/send-reset-otp`,
+                `/api/v1/auth/send-reset-otp`,
                 {
                     email,
                 }
@@ -210,7 +209,7 @@ export const UserProvider = ({ children }) => {
         try {
             setIsLoading(true);
             const response = await axios.post(
-                `${backendUrl}/api/v1/auth/change-password`,
+                `/api/v1/auth/change-password`,
                 {
                     email,
                     otp,

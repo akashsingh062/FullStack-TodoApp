@@ -38,7 +38,8 @@ export const register = tryCatchWrapper(async (req, res) => {
     try {
         await transporter.sendMail(mailOptions);
     } catch (emailError) {
-        throw new Error("Failed to send welcome email.")
+        console.warn("Welcome email failed:", emailError?.message || emailError);
+        // Continue without blocking user registration
     }
 
     res.status(201).cookie("token", newUser.token, {

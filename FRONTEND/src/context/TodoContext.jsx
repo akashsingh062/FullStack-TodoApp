@@ -7,7 +7,6 @@ const TodoContext = createContext();
 
 
 export const TodoProvider = ({ children }) => {
-    const backendUrl = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
     const [todos, setTodos] = useState([]);
     const [currentTodo, setCurrentTodo] = useState(null);
@@ -16,7 +15,7 @@ export const TodoProvider = ({ children }) => {
     const getAllTodos = async () => {
         try {
             setIsLoading(true);
-            const response = await axios.get(`${backendUrl}/api/v1/todos`, {
+            const response = await axios.get(`/api/v1/todos`, {
                 withCredentials: true
             });
             const data = response.data.data; 
@@ -42,7 +41,7 @@ export const TodoProvider = ({ children }) => {
     const createTodo = async (todo) => {
         try {
             setIsLoading(true);
-            const response = await axios.post(`${backendUrl}/api/v1/todo`, {
+            const response = await axios.post(`/api/v1/todo`, {
                 title: todo.title,
                 description: todo.description,
                 dueDate: todo.dueDate,
@@ -67,7 +66,7 @@ export const TodoProvider = ({ children }) => {
     const editTodo = async (todoId, updatedData) => {
         try {
             setIsLoading(true);
-            const response = await axios.patch(`${backendUrl}/api/v1/todos/${todoId}`, updatedData, {
+            const response = await axios.patch(`/api/v1/todos/${todoId}`, updatedData, {
                 withCredentials: true
             });
 
@@ -87,7 +86,7 @@ export const TodoProvider = ({ children }) => {
     const deleteTodo = async (todoId) => {
         try {
             setIsLoading(true);
-            const response = await axios.delete(`${backendUrl}/api/v1/todos/${todoId}`, {
+            const response = await axios.delete(`/api/v1/todos/${todoId}`, {
                 withCredentials: true
             });
 
@@ -107,7 +106,7 @@ export const TodoProvider = ({ children }) => {
     const toggleTodoCompletion = async (todoId, currentStatus) => {
         try {
             setIsLoading(true);
-            const response = await axios.patch(`${backendUrl}/api/v1/todos/${todoId}`, {
+            const response = await axios.patch(`/api/v1/todos/${todoId}`, {
                 completed: !currentStatus
             }, {
                 withCredentials: true
@@ -129,7 +128,7 @@ export const TodoProvider = ({ children }) => {
     const getTodoById = async (todoId) => {
         try {
             setIsLoading(true);
-            const response = await axios.get(`${backendUrl}/api/v1/todos/${todoId}`, {
+            const response = await axios.get(`/api/v1/todos/${todoId}`, {
                 withCredentials: true
             });
 
